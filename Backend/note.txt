@@ -1,0 +1,3 @@
+pip install flask (framework)
+pip freeze > requirements.txt (to generate requirement.txt)
+pip gunicorn (wsgi)
