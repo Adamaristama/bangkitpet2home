@@ -5,7 +5,7 @@ import numpy as np
 import base64
 # from keras.preprocessing import image
 
-model = tf.keras.models.load_model('./mobilenetv2_final')
+model = tf.keras.models.load_model('./modelXception')
 class_names = ['Abyssinian', 'Beagle', 'Bombay', 'British Shorthair',
                'Chihuahua', 'Persian', 'Pomeranian', 'Pug',
                'Shiba Inu','Siamese']
