@@ -14,7 +14,7 @@ def index():
     return json.dumps(data)
 
 
-@app.route('/api/predict/', methods=['POST'])
+@app.route('/api/predict', methods=['POST'])
 def predict_img():
     item = request.json
     item_dict = json.loads(item)
@@ -22,7 +22,7 @@ def predict_img():
     return jsonResponse
 
 
-@app.route('/api/test/', methods=['POST'])
+@app.route('/api/test', methods=['POST'])
 def test_post():
     item = request.json
     jsonResult = {
@@ -31,7 +31,7 @@ def test_post():
     return json.dumps(jsonResult)
 
 
-@app.route('/api/predict/img/', methods=['POST'])
+@app.route('/api/predict/img', methods=['POST'])
 def predict_full_img():
     item = request.json
     item_dict = json.loads(item, strict=False)
