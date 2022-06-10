@@ -9,19 +9,16 @@ import base64
 import json
 from PIL import Image
 from flask import Flask, jsonify, request
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.image import load_img , img_to_array
 
 model = tf.keras.models.load_model('./modelXception')
 
+ALLOWED_EXT = set(['jpg' , 'jpeg' , 'png' , 'jfif'])
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXT
 
-def preproc(data):
-    imgdata = base64.decodebytes(data)
-    image = Image.open(io.BytesIO(imgdata)).convert('RGB')
-    image_new = image.resize((299, 299))
-    x = np.array(image_new)
-    x = np.expand_dims(x, axis=0)
-    x = x / 255.0
-    new_x = np.vstack([x])
-    return 
 
 
 class_names = ['Abyssinian', 'Beagle', 'Bombay', 'British Shorthair',
@@ -29,41 +26,81 @@ class_names = ['Abyssinian', 'Beagle', 'Bombay', 'British Shorthair',
                'Shiba Inu','Siamese']
 
 
-def do_predict(data):
-    prediction = model.predict(data)
-    new_prediction = prediction.tolist()
-    result = int(np.argmax(prediction))
-    class_name = class_names[result]
-    percent = float(np.max(prediction * 100))
-    jsonDict = {
-        'predClass': result,
-        'className': class_name,
-        'percentage': percent,
-        'prediction': new_prediction,
-    }
-    return json.dumps(jsonDict)
+
+def predictpreprocess(filename , model):
+    #image preprocess
+    img = load_img(filename , target_size = (299 , 299))
+    img = img_to_array(img)
+    img = img.reshape(1 , 299 ,299 ,3)
+
+    img = img.astype('float32')
+    img = img/255.0
+    result = model.predict(img)
+    
+    #predict
+    dict_result = {}
+    for i in range(10):
+        dict_result[result[0][i]] = class_names[i]
+
+    res = result[0]
+    res.sort()
+    res = res[::-1]
+    prob = res[:3]
+    
+    prob_result = []
+    class_result = []
+    for i in range(3):
+        prob_result.append((prob[i]*100).round(2))
+        class_result.append(dict_result[prob[i]])
+
+    return class_result , prob_result
 
 app = Flask(__name__)
 
-@app.route('/predict', methods=['POST'])
-def infer_image():
-    if 'file' not in request.files:
-        return "Please try again. The Image doesn't exist"
+
+
+@app.route('/predict' , methods = ['POST'])
+def predict():
+    error = ''
+    target_img = os.path.join(os.getcwd() , 'static/images')
+    file = request.files['file']
+    if file and allowed_file(file.filename):
+                file.save(os.path.join(target_img , file.filename))
+                img_path = os.path.join(target_img , file.filename)
+                img = file.filename
+
+                class_result , prob_result = predict(img_path , model)
+
+                predictions = {
+                      "class1":class_result[0],
+                        "class2":class_result[1],
+                        "class3":class_result[2],
+                        "prob1": prob_result[0],
+                        "prob2": prob_result[1],
+                        "prob3": prob_result[2],
+                }
+
+    else:
+        error = "Please upload images of jpg , jpeg and png extension only"
+
+    if(len(error) == 0):
+        return  error
     
-    file = request.files.get('file')
-
-    if not file:
-        return
-
-    img_bytes = file.read()
-    img = preproc(img_bytes)
-
-    return jsonify(prediction=do_predict(img))
-    
+    return predictions
 
 @app.route('/', methods=['GET'])
 def index():
-    return 'api ml'
+    hello_json = {
+        'status_code': 200,
+        'message': 'Success testing the API!',
+        'data': [],
+    }
+    return jsonify(hello_json)
+
+@app.route('/post', methods=['POST'])
+def post():
+    data = request.get_json()
+    return jsonify(data)
 
 
 if __name__ == '__main__':
