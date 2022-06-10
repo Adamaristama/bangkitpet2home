@@ -28,3 +28,4 @@ google-auth==2.5.0
 google-auth-oauthlib==0.4.6
 google-pasta==0.2.0
 oauthlib==3.2.0
+tensorflow-hub==0.12.0
