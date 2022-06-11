@@ -1,31 +1,34 @@
-import logging
 from flask import Flask, jsonify, request
 from preproc import get_category
 
 app = Flask(__name__)
 
-@app.route("/")
-def showHomePage():
-    return "This is home page"
+@app.route('/')
+def index():
+    hello_json = {
+        'status_code': 200,
+        'message': 'Success testing the API!',
+        'data': [],
+    }
+    return jsonify(hello_json)
 
 
-@app.route('/Upload', methods=['GET', 'POST'])
-def skin_disease():
+@app.route('/predict', methods=['GET', 'POST'])
+def predict():
     if request.method == 'POST':
     # POST method to post the results file
-        # Read file from upload
+        # Read file
         img = request.files['file']
 
         if img is None or img.filename == "":
             return jsonify({"error": "no file"})
 
-        # Get category of prediction
+        # Get category prediction
         try:
             image_category = get_category(img)
 
             # make dictionary data and convert the dictionary to json
-            data = { "Prediksi" : image_category[0], 
-                    "Presentase" : image_category[1] }
+            data = { "Breed" : image_category[0], "Presentase" : image_category[1] }
             return jsonify(data)
 
         except Exception as err:
