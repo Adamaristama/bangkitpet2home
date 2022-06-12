@@ -1,0 +1,13 @@
+pip install flask (framework)
+pip freeze > requirements.txt (to generate requirement.txt)
+pip gunicorn (wsgi)
+
+
+#how to use
+apt install python3.10-venv
+python3 -m venv petenv
+source petenv/bin/activate
+sudo apt-get install python3.7
+
+#how to close from env
+deactivate
