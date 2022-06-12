@@ -39,6 +39,10 @@ This app is able to identify 5 breed of dog and 5 breed of cat and determine its
 ![modelplot](https://user-images.githubusercontent.com/53483448/173228156-761de12c-2d64-4f11-b731-b9ce514407f0.png)
 
 
+# Dataset
+link dataset https://www.kaggle.com/datasets/zippyz/cats-and-dogs-breeds-classification-oxford-dataset
+
+
 # Steps 
 - Model Building
   - Mount your Google Drive to colab and download the dataset
@@ -49,6 +53,7 @@ This app is able to identify 5 breed of dog and 5 breed of cat and determine its
   - Build the model architecture, and set callbacks
   - Fit the model, and evaluate it
   - Visualize the result, and convert model into SavedModel, TFLite format or model.h5
+
 
 
 # How to run this Flask app
@@ -62,9 +67,3 @@ This app is able to identify 5 breed of dog and 5 breed of cat and determine its
 - Machine Learning model deployed
 
 
-
-
-
-
-
-link dataset https://www.kaggle.com/datasets/zippyz/cats-and-dogs-breeds-classification-oxford-dataset
