@@ -27,9 +27,11 @@ This app is able to identify 5 breed of dog and 5 breed of cat and determine its
 
 # Model Architecture used for this app
 
-- Xception
+- Transfer Learning Xception
 
 ![image](https://user-images.githubusercontent.com/53483448/173228123-68ef06e1-39d0-4202-b151-d55991800be2.png)
+
+- Model
 
 ![modelplot](https://user-images.githubusercontent.com/53483448/173228156-761de12c-2d64-4f11-b731-b9ce514407f0.png)
 
