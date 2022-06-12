@@ -6,7 +6,7 @@ import matplotlib.image as mpimg
 import os
 
 
-model_file = 'modelXception.h5'
+model_file = './modelXception.h5'
 model = keras.models.load_model(model_file, custom_objects={
                                     'KerasLayer': hub.KerasLayer})
 
