@@ -25,6 +25,12 @@ This app is able to identify 5 breed of dog and 5 breed of cat and determine its
 - Shiba Inu
 - Siamese
 
+# Model Architecture used for this app
+
+Xception
+![image](https://user-images.githubusercontent.com/53483448/173228123-68ef06e1-39d0-4202-b151-d55991800be2.png)
+
+
 # Steps 
 - Model Building
   - Mount your Google Drive to colab and download the dataset
@@ -38,3 +44,5 @@ This app is able to identify 5 breed of dog and 5 breed of cat and determine its
 
 
 link dataset https://www.kaggle.com/datasets/zippyz/cats-and-dogs-breeds-classification-oxford-dataset
+
+- Deployment model
