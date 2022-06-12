@@ -44,7 +44,7 @@ link dataset https://www.kaggle.com/datasets/zippyz/cats-and-dogs-breeds-classif
 
 
 # Steps 
-- Model Building
+# Model Building
   - Mount your Google Drive to colab and download the dataset
   - Or using kaggle API to download directly to google colab
   - Unzip dataset after that shuffle and split data into train and validation
